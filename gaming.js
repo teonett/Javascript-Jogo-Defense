@@ -374,7 +374,7 @@ turrets.push(turret4);
             window.setTimeout( function() { canSpawnEnemies = true; }, enemySpawnDelayMs);
         }
         
-        canvas.addEventListener('mousedown', function () {
+        //canvas.addEventListener('mousedown', function () {
             
             if (turretCount > turretCooldown) {
             for (var i = 0; i < turrets.length; i++) {
@@ -397,7 +397,7 @@ turrets.push(turret4);
                     
                 }
             
-        }, false);
+        // }, false);
         
         turretCount++;
         
