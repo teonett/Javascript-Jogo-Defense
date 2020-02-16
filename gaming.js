@@ -13,7 +13,7 @@ var enemySpawnDelayMs = 550;
 var canSpawnEnemies = true;
 var enemiesHit = 0;
 
-var points = 1;
+var points = 50;
 var score = 0;
 var accuracy = 0;
 var shotsFired = 0;
@@ -36,10 +36,34 @@ function Turret (x, y) {
 Turret.prototype.draw = function () {
 
     context.save();
+
+    context.beginPath();
+    context.arc(this.x, this.y, 45, 0, 4*Math.PI, true);
+    context.fillStyle = "#b3b3b3";
+    context.stroke();
+    context.fill();
     
     context.beginPath();
     context.arc(this.x, this.y, this.size, 0, 2*Math.PI, true);
-    context.fillStyle = this.color;
+    context.fillStyle = "#737373";
+    context.stroke();
+    context.fill();
+
+    context.beginPath();
+    context.arc(this.x, this.y, 32, 0, 2*Math.PI, true);
+    context.fillStyle = "#4d4d4d";
+    context.stroke();
+    context.fill();
+
+    context.beginPath();
+    context.arc(this.x, this.y, 25, 0, 2*Math.PI, true);
+    context.fillStyle = "#333333";
+    context.stroke();
+    context.fill();
+
+    context.beginPath();
+    context.arc(this.x, this.y, 15, 0, 2*Math.PI, true);
+    context.fillStyle = "#262626";
     context.stroke();
     context.fill();
     
@@ -49,8 +73,7 @@ Turret.prototype.draw = function () {
     context.fillStyle = this.color;
     context.fillRect(-this.cannonWidth / 2, 0, this.cannonWidth, -this.cannonHeight);
     context.strokeRect(-this.cannonWidth / 2, 0, this.cannonWidth, -this.cannonHeight);
-    context.restore();	
-    
+    context.restore();		
 }
 
 function Bullet(x, y, targetx, targety) {
@@ -59,7 +82,7 @@ function Bullet(x, y, targetx, targety) {
     this.damage = 1;
     this.velocity = 7;
     this.radius = 7;
-    this.color = "yellow";
+    this.color = "linear-gradient(to top, #000000 0%, #ffffff 100%)";
     this.targetx = targetx;
     this.targety = targety;
     this.angle = 0;
@@ -97,7 +120,6 @@ Enemy.prototype.draw = function () {
     
     context.save();
     context.beginPath();
-    //Math.random() * (max - min) + min
     
     min = 1;
     max = 9;
@@ -125,8 +147,8 @@ Enemy.prototype.draw = function () {
         case 2:
             context.save();
             
-            context.strokeStyle = "#FFFFFF";
-            context.fillStyle = "#FFFFFF";
+            context.strokeStyle = "#ff00ff";
+            context.fillStyle = "#ff00ff";
             context.arc(this.x, this.y, this.radius, 3, 2*Math.PI, true);
             context.stroke();
             context.fill();
@@ -143,8 +165,8 @@ Enemy.prototype.draw = function () {
         case 3:
             context.save();
             
-            context.strokeStyle = "#FFFFFF";
-            context.fillStyle = "#FFFFFF";
+            context.strokeStyle = "#ff0000";
+            context.fillStyle = "#ff0000";
             context.arc(this.x, this.y, this.radius, 3, 2*Math.PI, true);
             context.stroke();
             context.fill();
@@ -155,7 +177,6 @@ Enemy.prototype.draw = function () {
             context.stroke();
             context.fill();
             context.restore();
-
 
             break;
 
@@ -211,17 +232,58 @@ function drawBackground() {
     
     context.fillStyle = "#4169E1";
     context.fillRect(canvas.width / 4, 0, canvas.width / 2, canvas.height);
-    
+
     context.fillStyle = "#FFFFFF";
-    context.font="42px arial";
-    context.fillText("A L I E N S", 12, 40); 
-    context.fillText("DEFENDER", 11, 75);
-    
+    context.font="30px Consolas";
+    context.fillText("Limite: ", 11, 40); 
+    context.restore();
+
     context.fillStyle = "#FFFFFF";
     context.font="40px Consolas";
-    context.fillText("Limite: " + points, 760, 600); 
+    context.fillText(points, 11, 80); 
     context.restore();
     
+    context.fillStyle = "#FFFFFF";
+    context.font="30px Consolas";
+    context.fillText("Disparos: ", 11, 150); 
+    context.restore();
+
+    context.fillStyle = "#FFFFFF";
+    context.font="40px Consolas";
+    context.fillText(shotsFired, 11, 190); 
+    context.restore();
+
+    context.fillStyle = "#FFFFFF";
+    context.font="30px Consolas";
+    context.fillText("Total Inimigos: ", 755, 40); 
+    context.restore();
+
+    context.fillStyle = "#FFFFFF";
+    context.font="40px Consolas";
+    context.fillText(enemiesSpawned, 755, 80); 
+    context.restore();
+    
+    context.fillStyle = "#FFFFFF";
+    context.font="30px Consolas";
+    context.fillText("Abatidos: " , 755, 150); 
+    context.restore();
+
+    context.fillStyle = "#FFFFFF";
+    context.font="40px Consolas";
+    context.fillText(score, 755, 190); 
+    context.restore();
+
+    context.fillStyle = "#FFFFFF";
+    context.font="30px Consolas";
+    context.fillText("Precisão: " , 755, 550); 
+    context.restore();
+
+    var precisao = (enemiesHit / shotsFired) * 100;
+    context.fillStyle = "#FFFFFF";
+    context.font="40px Consolas";
+    context.fillText(precisao.toFixed(2) + "%", 755, 590); 
+    context.restore();
+
 }
 
 function setBulletAngle(bullet) {
